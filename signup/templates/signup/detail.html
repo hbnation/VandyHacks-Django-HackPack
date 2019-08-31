@@ -1,0 +1,12 @@
+<h1>{{ event_description }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'vote' event.id %}" method="post">
+{% csrf_token %}
+{% for role in event.role_set.all %}
+    <input type="radio" name="role" id="role{{ forloop.counter }}" value="{{ role.id }}">
+    <label for="role{{ forloop.counter }}">{{ role.name }} ({{ role.selection }}) </label><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
